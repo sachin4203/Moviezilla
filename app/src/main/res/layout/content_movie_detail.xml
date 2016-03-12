@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.sachin.moviezilla.MovieDetail"
+    tools:showIn="@layout/activity_movie_detail">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameLayout">
+
+        <ImageView
+            android:layout_width="500dp"
+            android:layout_height="210dp"
+            android:id="@+id/imageView"
+
+            android:layout_gravity="center" />
+
+
+    </FrameLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+
+        android:paddingRight="8dp"
+        android:id="@+id/relativeLayout"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/posterBackdrop"
+        android:layout_toEndOf="@+id/posterBackdrop">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:padding="8dp"
+            android:fontFamily="sans-serif-black"
+            android:textStyle="bold"
+            android:id="@+id/textRatings"
+            android:layout_below="@+id/textRelease"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:padding="8dp"
+            android:textSize="20dp"
+            android:id="@+id/textmTitle"
+            android:fontFamily="sans-serif-bold"
+            android:textStyle="bold"
+
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/textRelease"
+            android:padding="8dp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_below="@+id/textmTitle" />
+
+
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:textSize="16dp"
+        android:text="Large Text"
+        android:id="@+id/textOverview"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="sans-serif-light"
+        android:scrollbars="vertical"
+       />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="170dp"
+        android:id="@+id/posterBackdrop"
+
+        android:layout_gravity="center"
+        android:layout_above="@+id/textOverview"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+         />
+
+</RelativeLayout>

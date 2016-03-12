@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="listArray">
+        <item>Most Popular</item>
+        <item>Highly Rated</item>
+
+    </string-array>
+
+    <string-array name="listValues">
+        <item>Popular</item>
+        <item>HighlyRated</item>
+
+    </string-array>
+</resources>
