@@ -70,12 +70,12 @@ public class MainActivityFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 Intent intent = new Intent(getActivity(), MovieDetail.class);
-                intent.putExtra("title", mGridData.get(position).getOriginal_title());
-                intent.putExtra("poster", mGridData.get(position).getPoster_path());
-                intent.putExtra("release", mGridData.get(position).getRelease_date());
-                intent.putExtra("overview", mGridData.get(position).getOverview());
-                intent.putExtra("vote", mGridData.get(position).getVote_average());
-                intent.putExtra("backdrop", mGridData.get(position).getBackdrop_path());
+                intent.putExtra(getString(R.string.in_title), mGridData.get(position).getOriginal_title());
+                intent.putExtra(getString(R.string.in_poster), mGridData.get(position).getPoster_path());
+                intent.putExtra(getString(R.string.in_release), mGridData.get(position).getRelease_date());
+                intent.putExtra(getString(R.string.in_overview), mGridData.get(position).getOverview());
+                intent.putExtra(getString(R.string.in_vote), mGridData.get(position).getVote_average());
+                intent.putExtra(getString(R.string.in_backdrop), mGridData.get(position).getBackdrop_path());
 
                 startActivity(intent);
             }

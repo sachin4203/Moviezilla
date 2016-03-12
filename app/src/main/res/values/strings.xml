@@ -63,4 +63,14 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="movieKey">movieType</string>
     <string name="type_popular">Popular</string>
+
+    <string name="in_title">title</string>
+    <string name="in_poster">poster</string>
+    <string name="in_release">release</string>
+    <string name="in_overview">overview</string>
+    <string name="in_vote">vote</string>
+    <string name="in_backdrop">backdrop</string>
+
+
+
 </resources>

@@ -52,12 +52,12 @@ public class MovieDetail extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-             mtitle = extras.getString("title");
-             mPoster = extras.getString("poster");
-             mOverView = extras.getString("overview");
-             mReleaseDate= extras.getString("release");
-             mVoteAverage= extras.getDouble("vote");
-            mBackdrop =extras.getString("backdrop");
+             mtitle = extras.getString(getString(R.string.in_title));
+             mPoster = extras.getString(getString(R.string.in_poster));
+             mOverView = extras.getString(getString(R.string.in_overview));
+             mReleaseDate= extras.getString(getString(R.string.in_release));
+             mVoteAverage= extras.getDouble(getString(R.string.in_vote));
+            mBackdrop =extras.getString(getString(R.string.in_backdrop));
 
         }
         title.setText(mtitle);
