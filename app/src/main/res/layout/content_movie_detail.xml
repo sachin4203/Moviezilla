@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-
         android:paddingRight="8dp"
         android:id="@+id/relativeLayout"
         android:layout_centerVertical="true"
@@ -45,7 +44,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:padding="8dp"
             android:fontFamily="sans-serif-black"
             android:textStyle="bold"
@@ -57,7 +55,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:padding="8dp"
             android:textSize="20dp"
             android:id="@+id/textmTitle"
@@ -70,7 +67,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+
             android:id="@+id/textRelease"
             android:padding="8dp"
             android:fontFamily="sans-serif-light"
@@ -87,7 +84,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
        android:textSize="16dp"
-        android:text="Large Text"
         android:id="@+id/textOverview"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"

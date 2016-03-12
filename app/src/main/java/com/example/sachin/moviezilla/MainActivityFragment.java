@@ -121,8 +121,8 @@ public class MainActivityFragment extends Fragment {
         restClient = new RestClient();
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        String downloadType = SP.getString("movieType","Popular");
-        if(downloadType!=null && !downloadType.equalsIgnoreCase("Popular"))
+        String downloadType = SP.getString(getString(R.string.movieKey),(getString(R.string.type_popular)));
+        if(downloadType!=null && !downloadType.equalsIgnoreCase((getString(R.string.type_popular))))
         {mGridData.clear();
             restClient.getService().fetchMovies(new Callback<Movie>() {
                 @Override
@@ -183,8 +183,7 @@ public class MainActivityFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
 
-           /* Intent i = new Intent(getActivity(),Mysettings.class);
-            startActivity(i);*/
+
             return true;
         }
         return super.onOptionsItemSelected(item);
