@@ -1,10 +1,18 @@
 package com.example.sachin.moviezilla;
 
+import android.content.ContentProviderOperation;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.sachin.moviezilla.data.FavouriteMovieColumns;
+import com.example.sachin.moviezilla.data.PlanetProvider;
 import com.example.sachin.moviezilla.model.Movie;
 import com.twotoasters.jazzylistview.JazzyGridView;
 import com.twotoasters.jazzylistview.JazzyHelper;
@@ -29,22 +39,49 @@ import retrofit.client.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public MainActivityFragment() {
     }
     RestClient restClient;
-    private static final String TAG = MainActivityFragment.class.getSimpleName();
+    private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
     private JazzyGridView mGridView;
     private ProgressBar mProgressBar;
     private GridViewAdapter mGridAdapter;
     private ArrayList<GridItem> mGridData;
     private RelativeLayout mRelativeLayout;
+    private static final int CURSOR_LOADER_ID = 0;
+
+   /* @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+       *//* Cursor c = getActivity().getContentResolver().query(PlanetProvider.FavouriteMovies.CONTENT_URI,
+                null, null, null, null);
+        Log.i(LOG_TAG, "cursor count: " + c.getCount());
+        if (c == null || c.getCount() == 0){
+         //   insertData();
+        }*//*
+
+
+       // getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+*/
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+       Cursor c = getActivity().getContentResolver().query(PlanetProvider.FavouriteMovies.CONTENT_URI,
+        null, null, null, null);
+        Log.i(LOG_TAG, "cursor count: " + c.getCount());
+        if (c == null || c.getCount() == 0){
+            // insertData();
+            Toast.makeText(getActivity(), "Zerooooo", Toast.LENGTH_LONG).show();
+        }
+
+
+         getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
+      super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
        // setHasOptionsMenu(true);
 
@@ -76,7 +113,7 @@ public class MainActivityFragment extends Fragment {
                 intent.putExtra(getString(R.string.in_overview), mGridData.get(position).getOverview());
                 intent.putExtra(getString(R.string.in_vote), mGridData.get(position).getVote_average());
                 intent.putExtra(getString(R.string.in_backdrop), mGridData.get(position).getBackdrop_path());
-
+                insertData();
                 startActivity(intent);
             }
         });
@@ -118,6 +155,9 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        Log.d(LOG_TAG, "resume called");
+
+        getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
         restClient = new RestClient();
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -189,4 +229,54 @@ public class MainActivityFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void insertData(){
+        Log.d(LOG_TAG, "insert");
+        ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>(mGridData.size());
+
+        for (GridItem planet : mGridData){
+            ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
+                    PlanetProvider.FavouriteMovies.CONTENT_URI);
+            builder.withValue(FavouriteMovieColumns.TITLE, planet.getOriginal_title());
+            builder.withValue(FavouriteMovieColumns.OVERVIEW, planet.getOverview());
+            builder.withValue(FavouriteMovieColumns.POSTER_PATH, planet.getPoster_path());
+            builder.withValue(FavouriteMovieColumns.RELEASE_DATE, planet.getRelease_date());
+            builder.withValue(FavouriteMovieColumns.VOTE_AVERAGE, planet.getVote_average());
+            batchOperations.add(builder.build());
+        }
+
+        try{
+            getActivity().getContentResolver().applyBatch(PlanetProvider.AUTHORITY, batchOperations);
+        } catch(RemoteException | OperationApplicationException e){
+            Log.e(LOG_TAG, "Error applying batch insert", e);
+        }
+
+    }
+
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args){
+        return new CursorLoader(getActivity(), PlanetProvider.Planets.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data){
+       // mCursorAdapter.swapCursor(data);
+
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader){
+       // mCursorAdapter.swapCursor(null);
+    }
 }
+
+
+
+
