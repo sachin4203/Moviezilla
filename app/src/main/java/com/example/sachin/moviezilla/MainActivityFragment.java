@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,7 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -28,7 +29,6 @@ import com.example.sachin.moviezilla.data.FavouriteMovieColumns;
 import com.example.sachin.moviezilla.data.PlanetProvider;
 import com.example.sachin.moviezilla.model.Movie;
 import com.twotoasters.jazzylistview.JazzyGridView;
-import com.twotoasters.jazzylistview.JazzyHelper;
 
 import java.util.ArrayList;
 
@@ -51,6 +51,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private ArrayList<GridItem> mGridData;
     private RelativeLayout mRelativeLayout;
     private static final int CURSOR_LOADER_ID = 0;
+    private RecyclerView rv;
 
    /* @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -89,22 +90,47 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        rv=(RecyclerView)view.findViewById(R.id.rv);
 
-        mGridView = (JazzyGridView) view.findViewById(R.id.gridView);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(llm);
+        rv.setHasFixedSize(true);
+
+       // mGridView = (JazzyGridView) view.findViewById(R.id.gridView);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mRelativeLayout= (RelativeLayout)view.findViewById(R.id.container);
-          mGridView.setTransitionEffect(JazzyHelper.HELIX);
+        //  mGridView.setTransitionEffect(JazzyHelper.HELIX);
         mProgressBar.setVisibility(View.VISIBLE);
         mRelativeLayout.setVisibility(View.GONE);
         //Initialize with empty data
         mGridData = new ArrayList<>();
-        mGridAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item_layout, mGridData);
-        mGridView.setAdapter(mGridAdapter);
+        mGridAdapter = new GridViewAdapter(mGridData,getActivity() );
+       rv.setAdapter(mGridAdapter);
 
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
+        rv.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+                        Intent intent = new Intent(getActivity(), MovieDetail.class);
+                        intent.putExtra(getString(R.string.in_title), mGridData.get(position).getOriginal_title());
+                        intent.putExtra(getString(R.string.in_poster), mGridData.get(position).getPoster_path());
+                        intent.putExtra(getString(R.string.in_release), mGridData.get(position).getRelease_date());
+                        intent.putExtra(getString(R.string.in_overview), mGridData.get(position).getOverview());
+                        intent.putExtra(getString(R.string.in_vote), mGridData.get(position).getVote_average());
+                        intent.putExtra(getString(R.string.in_backdrop), mGridData.get(position).getBackdrop_path());
+                        //insertData();
+                        startActivity(intent);
+                    }
+                })
+        );
+
+
+       /* mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 Intent intent = new Intent(getActivity(), MovieDetail.class);
                 intent.putExtra(getString(R.string.in_title), mGridData.get(position).getOriginal_title());
@@ -116,7 +142,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 insertData();
                 startActivity(intent);
             }
-        });
+        });*/
 
         return view;
 
@@ -147,7 +173,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             }
         }
 
-        mGridAdapter.setGridData(mGridData);
+        //mGridAdapter.setGridData(mGridData);
     }
 
 

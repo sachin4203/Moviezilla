@@ -3,66 +3,72 @@ package com.example.sachin.moviezilla;
 /**
  * Created by SACHIN on 07-03-2016.
  */
-import android.app.Activity;
+
 import android.content.Context;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class GridViewAdapter extends ArrayAdapter<GridItem> {
+public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.PersonViewHolder> {
 
-    private Context mContext;
-    private int layoutResourceId;
-    private ArrayList<GridItem> mGridData = new ArrayList<GridItem>();
+    public static class PersonViewHolder extends RecyclerView.ViewHolder {
 
-    public GridViewAdapter(Context mContext, int layoutResourceId, ArrayList<GridItem> mGridData) {
-        super(mContext, layoutResourceId, mGridData);
-        this.layoutResourceId = layoutResourceId;
-        this.mContext = mContext;
-        this.mGridData = mGridData;
+        CardView cv;
+
+        TextView personAge;
+        ImageView personPhoto;
+        TextView ratings;
+
+
+        PersonViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.cv);
+            personPhoto = (ImageView)itemView.findViewById(R.id.grid_item_image);
+            personAge = (TextView)itemView.findViewById(R.id.person_age);
+           ratings = (TextView)itemView.findViewById(R.id.ratings);
+
+        }
     }
 
+    List<GridItem> persons;
+    Context mContext;
 
-    /**
-     * Updates grid data and refresh grid items.
-     * @param mGridData
-     */
-    public void setGridData(ArrayList<GridItem> mGridData) {
-        this.mGridData = mGridData;
-        notifyDataSetChanged();
+    GridViewAdapter(List<GridItem> persons,Context mContext){
+        this.persons = persons;
+        this.mContext=mContext;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
-        ViewHolder holder;
-
-        if (row == null) {
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
-            holder = new ViewHolder();
-
-            holder.imageView = (ImageView) row.findViewById(R.id.grid_item_image);
-            row.setTag(holder);
-        } else {
-            holder = (ViewHolder) row.getTag();
-        }
-
-        GridItem item = mGridData.get(position);
-
-
-        Picasso.with(mContext).load(item.getPoster_path()).into(holder.imageView);
-        return row;
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
-    static class ViewHolder {
+    @Override
+    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.grid_item_layout, viewGroup, false);
+        PersonViewHolder pvh = new PersonViewHolder(v);
+        return pvh;
+    }
 
-        ImageView imageView;
+    @Override
+    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+
+        personViewHolder.personAge.setText(persons.get(i).original_title);
+        //personViewHolder.personPhoto.setImageResource(persons.get(i).poster_path);
+        personViewHolder.ratings.setText(Double.toString(persons.get(i).vote_average));
+        Picasso.with(mContext).load(persons.get(i).backdrop_path).into( personViewHolder.personPhoto);
+    }
+
+    @Override
+    public int getItemCount() {
+        return persons.size();
     }
 }
