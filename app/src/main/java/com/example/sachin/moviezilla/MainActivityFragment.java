@@ -275,6 +275,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             getActivity().getContentResolver().applyBatch(PlanetProvider.AUTHORITY, batchOperations);
         } catch(RemoteException | OperationApplicationException e){
             Log.e(LOG_TAG, "Error applying batch insert", e);
+            Log.e(LOG_TAG, "Error applying batch insert", e);
         }
 
     }
