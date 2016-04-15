@@ -63,6 +63,8 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="movieKey">movieType</string>
     <string name="type_popular">Popular</string>
+    <string name="type_favourite">Favourites</string>
+    <string name="type_highRated">HighlyRated</string>
 
     <string name="in_title">title</string>
     <string name="in_poster">poster</string>

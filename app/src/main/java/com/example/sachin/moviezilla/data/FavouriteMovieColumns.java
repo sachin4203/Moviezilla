@@ -31,5 +31,7 @@ public interface FavouriteMovieColumns {
             "vote_average";
     @DataType(DataType.Type.TEXT) @NotNull public static final String RELEASE_DATE =
             "release_date";
+    @DataType(DataType.Type.TEXT) @NotNull public static final String BACK_DROP =
+            "backdrop_path";
 }
 

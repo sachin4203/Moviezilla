@@ -52,6 +52,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private RelativeLayout mRelativeLayout;
     private static final int CURSOR_LOADER_ID = 0;
     private RecyclerView rv;
+    String downloadType;
 
    /* @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -174,6 +175,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         }
 
         //mGridAdapter.setGridData(mGridData);
+        mGridAdapter = new GridViewAdapter(mGridData,getActivity() );
+        rv.setAdapter(mGridAdapter);
     }
 
 
@@ -187,9 +190,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         restClient = new RestClient();
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        String downloadType = SP.getString(getString(R.string.movieKey),(getString(R.string.type_popular)));
-        if(downloadType!=null && !downloadType.equalsIgnoreCase((getString(R.string.type_popular))))
-        {mGridData.clear();
+        downloadType = SP.getString(getString(R.string.movieKey),(getString(R.string.type_popular)));
+        if(downloadType!=null && downloadType.equalsIgnoreCase((getString(R.string.type_highRated))))
+        {
+            mGridData.clear();
             restClient.getService().fetchMovies(new Callback<Movie>() {
                 @Override
                 public void success(Movie movie, Response response) {
@@ -208,7 +212,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             });
 
         }
-        else {
+        else if(downloadType!=null && downloadType.equalsIgnoreCase((getString(R.string.type_popular))))
+        {
             mGridData.clear();
             restClient.getService().fetchPopularMovies(new Callback<Movie>() {
                 @Override
@@ -275,7 +280,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             getActivity().getContentResolver().applyBatch(PlanetProvider.AUTHORITY, batchOperations);
         } catch(RemoteException | OperationApplicationException e){
             Log.e(LOG_TAG, "Error applying batch insert", e);
-            Log.e(LOG_TAG, "Error applying batch insert", e);
+
         }
 
     }
@@ -284,7 +289,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
-        return new CursorLoader(getActivity(), PlanetProvider.Planets.CONTENT_URI,
+        return new CursorLoader(getActivity(), PlanetProvider.FavouriteMovies.CONTENT_URI,
                 null,
                 null,
                 null,
@@ -294,13 +299,52 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data){
        // mCursorAdapter.swapCursor(data);
+        if(downloadType!=null && downloadType.equalsIgnoreCase((getString(R.string.type_favourite)))) {
+            Toast.makeText(getActivity(), "Holoaaaaa HAHAAH", Toast.LENGTH_LONG).show();
+            mProgressBar.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+            data.moveToFirst();
+            GridItem item;
+            mGridData.clear();
+            while (!data.isAfterLast()) {
 
+                item = new GridItem();
+                String poster = data.getString(data.getColumnIndex(
+                        FavouriteMovieColumns.POSTER_PATH));
+                item.setPoster_path(poster);
+                String backdrop = data.getString(data.getColumnIndex(
+                        FavouriteMovieColumns.BACK_DROP));
+                item.setBackdrop_path(backdrop);
+                String title = data.getString(data.getColumnIndex(
+                        FavouriteMovieColumns.TITLE));
+                item.setOriginal_title(title);
+                String overview = data.getString(data.getColumnIndex(
+                        FavouriteMovieColumns.OVERVIEW));
+                item.setOverview(overview);
+                double voteAverage = data.getDouble(data.getColumnIndex(
+                        FavouriteMovieColumns.VOTE_AVERAGE));
+                String releaseDate = data.getString(data.getColumnIndex(
+                        FavouriteMovieColumns.RELEASE_DATE));
+                item.setRelease_date(releaseDate);
+                mGridData.add(item);
+
+
+
+
+                data.moveToNext();
+            }
+            mGridAdapter = new GridViewAdapter(mGridData,getActivity() );
+            rv.setAdapter(mGridAdapter);
+
+        }
 
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader){
        // mCursorAdapter.swapCursor(null);
+        mGridAdapter = new GridViewAdapter(mGridData,getActivity() );
+        rv.setAdapter(mGridAdapter);
     }
 }
 

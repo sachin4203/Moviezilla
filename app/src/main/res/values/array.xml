@@ -4,12 +4,14 @@
     <string-array name="listArray">
         <item>Most Popular</item>
         <item>Highly Rated</item>
+        <item>Favourites</item>
 
     </string-array>
 
     <string-array name="listValues">
         <item>Popular</item>
         <item>HighlyRated</item>
+        <item>Favourites</item>
 
     </string-array>
 </resources>

@@ -147,6 +147,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
         cv.put(FavouriteMovieColumns.POSTER_PATH, mPoster);
         cv.put(FavouriteMovieColumns.VOTE_AVERAGE, mVoteAverage);
         cv.put(FavouriteMovieColumns.RELEASE_DATE, mReleaseDate);
+        cv.put(FavouriteMovieColumns.BACK_DROP, mBackdrop);
         this.getContentResolver().insert(
                 PlanetProvider.FavouriteMovies.withId(_id), cv);
 
