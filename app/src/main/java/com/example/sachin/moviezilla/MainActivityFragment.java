@@ -84,8 +84,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
          getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
       super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
-       // setHasOptionsMenu(true);
+
 
     }
     @Override
