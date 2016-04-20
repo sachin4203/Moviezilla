@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +31,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
     ImageView imageView,backdrop;
     String mtitle,mPoster,mOverView ,mReleaseDate,mBackdrop;
     Double mVoteAverage;
-    Button Fav;
+    ImageButton Fav;
     private static final int CURSOR_LOADER_ID = 0;
     long _id = 232;
 
@@ -76,7 +76,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
         voteAverage = (TextView) findViewById(R.id.textRatings);
         imageView = (ImageView) findViewById(R.id.imageView);
         backdrop = (ImageView) findViewById(R.id.posterBackdrop);
-        Fav = (Button) findViewById(R.id.button);
+        Fav = (ImageButton) findViewById(R.id.button);
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -102,6 +102,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
             @Override
             public void onClick(View view) {
                 insertData();
+                Fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                 // Toast.makeText(MainActivity.this, "Button Clicked", Toast.LENGTH_SHORT).show();
                 /*ContentValues[] flavorValuesArr = new ContentValues[1];
                 // Loop through static array of Flavors, add each to an instance of ContentValues
