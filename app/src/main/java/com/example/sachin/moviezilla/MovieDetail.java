@@ -34,6 +34,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
     ImageButton Fav;
     private static final int CURSOR_LOADER_ID = 0;
     long _id = 232;
+    String favIcon;
 
 
    /* @Override
@@ -161,7 +162,14 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
     public void onResume() {
         super.onResume();
         Log.d(LOG_TAG, "resume called");
-       // getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
+      /* /*//*//* getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+         favIcon = getResources().getString(R.string.icon_shared_fav);
+        if(favIcon!=null && favIcon.equalsIgnoreCase("favourite"))))
+        {
+
+        }*/
+
     }
 
     @Override
