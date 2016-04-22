@@ -27,7 +27,7 @@ public interface FavouriteMovieColumns {
             "overview";
     @DataType(DataType.Type.TEXT) @NotNull public static final String POSTER_PATH =
             "poster_path";
-    @DataType(DataType.Type.REAL) @NotNull public static final String VOTE_AVERAGE =
+    @DataType(DataType.Type.INTEGER) @NotNull public static final String VOTE_AVERAGE =
             "vote_average";
     @DataType(DataType.Type.TEXT) @NotNull public static final String RELEASE_DATE =
             "release_date";
