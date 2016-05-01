@@ -322,6 +322,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 item.setOverview(overview);
                 double voteAverage = data.getDouble(data.getColumnIndex(
                         FavouriteMovieColumns.VOTE_AVERAGE));
+                item.setVote_average(voteAverage);
                 String releaseDate = data.getString(data.getColumnIndex(
                         FavouriteMovieColumns.RELEASE_DATE));
                 item.setRelease_date(releaseDate);
