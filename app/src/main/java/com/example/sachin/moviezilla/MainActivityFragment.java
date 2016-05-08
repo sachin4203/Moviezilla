@@ -326,6 +326,20 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 String releaseDate = data.getString(data.getColumnIndex(
                         FavouriteMovieColumns.RELEASE_DATE));
                 item.setRelease_date(releaseDate);
+
+                if(mGridData.size()== 0)
+                    mGridData.add(item);
+
+
+                for(int i=0;i<mGridData.size();i++)
+                {
+                    if(data.getString(data.getColumnIndex(
+                            FavouriteMovieColumns.TITLE)).equals(mGridData.get(i).getOriginal_title()))
+                      //  Toast.makeText(getActivity(), mGridData.get(i).getOriginal_title() , Toast.LENGTH_LONG).show();
+                        mGridData.remove(i);
+
+                }
+
                 mGridData.add(item);
 
 

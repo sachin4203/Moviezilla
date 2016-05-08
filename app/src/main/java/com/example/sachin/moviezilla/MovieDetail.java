@@ -1,7 +1,6 @@
 package com.example.sachin.moviezilla;
 
 import android.content.ContentValues;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sachin.moviezilla.data.FavouriteMovieColumns;
 import com.example.sachin.moviezilla.data.PlanetProvider;
@@ -36,9 +34,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
     ImageButton Fav;
     private static final int CURSOR_LOADER_ID = 0;
     long _id = 232;
-    String favIcon;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+
 
    /* @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -63,11 +59,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-         editor = pref.edit();
-        // Saving boolean - true/false
-        editor.putString("set_fav", "no");// Saving integer
-        editor.commit();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -115,22 +107,9 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
 
 
 
-                String fa =  pref.getString("set_fav", "yes");
-                if(fa!=null && fa.equalsIgnoreCase("no"))
-                {
+
                     insertData();
-                    editor.putString("set_fav", "yes");  // Saving string
-                    Fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    // Save the changes in SharedPreferences
-                    editor.commit();
 
-                }
-                 else if(fa!=null && fa.equalsIgnoreCase("yes"))
-                {
-                    Fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                    deleteData();
-
-                }
 
                // Toast.makeText(getApplicationContext(), pref.getString("set_fav", "yes"), Toast.LENGTH_LONG).show();
                // Fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
@@ -163,12 +142,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
 
     }
 
-public void deleteData(){
 
-    long saveId =  pref.getLong("set_id", 999999);
-
-    Toast.makeText(getApplicationContext(), Long.toString(saveId), Toast.LENGTH_LONG).show();
-}
 
     public void insertData(){
 
@@ -187,10 +161,7 @@ public void deleteData(){
         cv.put(FavouriteMovieColumns.BACK_DROP, mBackdrop);
         this.getContentResolver().insert(
                 PlanetProvider.FavouriteMovies.withId(_id), cv);
-        editor.putLong("set_id", _id);  // Saving string
 
-        // Save the changes in SharedPreferences
-        editor.commit();
 
         _id++;
 
@@ -203,22 +174,7 @@ public void deleteData(){
         super.onResume();
         Log.d(LOG_TAG, "resume called");
 
-        String fa =  pref.getString("set_fav", "yes");
-        if(fa!=null && fa.equalsIgnoreCase("no"))
-        {
-            Toast.makeText(getApplicationContext(), "Fav NOT set", Toast.LENGTH_LONG).show();
-            Fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
 
-            // Save the changes in SharedPreferences
-
-
-        }
-        else if(fa!=null && fa.equalsIgnoreCase("yes"))
-        {
-            Toast.makeText(getApplicationContext(), "Fav is set", Toast.LENGTH_LONG).show();
-            Fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-
-        }
       /* /*//*//* getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
          favIcon = getResources().getString(R.string.icon_shared_fav);
