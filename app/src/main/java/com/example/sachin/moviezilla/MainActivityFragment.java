@@ -122,6 +122,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                         intent.putExtra(getString(R.string.in_overview), mGridData.get(position).getOverview());
                         intent.putExtra(getString(R.string.in_vote), mGridData.get(position).getVote_average());
                         intent.putExtra(getString(R.string.in_backdrop), mGridData.get(position).getBackdrop_path());
+                        intent.putExtra(getString(R.string.in_id), mGridData.get(position).getId());
                         //insertData();
                         startActivity(intent);
                     }
@@ -168,6 +169,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 item.setVote_average(voteAverage);
                 String releaseDate = movie.results.get(i).release_date;
                 item.setRelease_date(releaseDate);
+                int movieId=movie.results.get(i).id;
+                item.setId(movieId);
                 mGridData.add(item);
 
             }

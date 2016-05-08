@@ -33,5 +33,7 @@ public interface FavouriteMovieColumns {
             "release_date";
     @DataType(DataType.Type.TEXT) @NotNull public static final String BACK_DROP =
             "backdrop_path";
+    @DataType(DataType.Type.INTEGER) @NotNull public static final String MOVIE_ID =
+            "movie_id";
 }
 

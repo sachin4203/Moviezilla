@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sachin.moviezilla.data.FavouriteMovieColumns;
 import com.example.sachin.moviezilla.data.PlanetProvider;
@@ -34,7 +35,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
     ImageButton Fav;
     private static final int CURSOR_LOADER_ID = 0;
     long _id = 232;
-
+    int mMovieId;
 
    /* @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -88,6 +89,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
             mReleaseDate = extras.getString(getString(R.string.in_release));
             mVoteAverage = extras.getDouble(getString(R.string.in_vote));
             mBackdrop = extras.getString(getString(R.string.in_backdrop));
+            mMovieId= extras.getInt(getString(R.string.in_id));
 
         }
         title.setText(mtitle);
@@ -159,6 +161,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
         cv.put(FavouriteMovieColumns.VOTE_AVERAGE, mVoteAverage);
         cv.put(FavouriteMovieColumns.RELEASE_DATE, mReleaseDate);
         cv.put(FavouriteMovieColumns.BACK_DROP, mBackdrop);
+        cv.put(FavouriteMovieColumns.MOVIE_ID, mMovieId);
         this.getContentResolver().insert(
                 PlanetProvider.FavouriteMovies.withId(_id), cv);
 
@@ -173,7 +176,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
 
         super.onResume();
         Log.d(LOG_TAG, "resume called");
-
+        Toast.makeText(getApplicationContext(), "The Movie id is" + mMovieId , Toast.LENGTH_LONG).show();
 
       /* /*//*//* getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);

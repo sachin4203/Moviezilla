@@ -10,6 +10,17 @@ public class GridItem {
     public String original_title;
     public double vote_average;
     public String backdrop_path;
+    public int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
 
     public String getBackdrop_path() {
         return backdrop_path;

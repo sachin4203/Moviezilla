@@ -11,4 +11,6 @@ public class Results {
     public double vote_average;
     public String release_date;
     public String backdrop_path;
+    public int id;
+
 }
