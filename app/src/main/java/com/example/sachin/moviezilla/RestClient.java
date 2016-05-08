@@ -5,7 +5,7 @@ package com.example.sachin.moviezilla;
  */
 public class RestClient {
 
-    private static final String URL = "http://api.themoviedb.org/3/discover/";
+    private static final String URL = "http://api.themoviedb.org/3/";
 
     private retrofit.RestAdapter restAdapter;
     private MovieInterface movieInterface;

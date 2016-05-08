@@ -20,7 +20,13 @@ import android.widget.Toast;
 
 import com.example.sachin.moviezilla.data.FavouriteMovieColumns;
 import com.example.sachin.moviezilla.data.PlanetProvider;
+import com.example.sachin.moviezilla.model.Video;
 import com.squareup.picasso.Picasso;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MovieDetail extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -176,7 +182,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
 
         super.onResume();
         Log.d(LOG_TAG, "resume called");
-        Toast.makeText(getApplicationContext(), "The Movie id is" + mMovieId , Toast.LENGTH_LONG).show();
+
 
       /* /*//*//* getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
@@ -185,6 +191,32 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
         {
 
         }*/
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://api.themoviedb.org/3/")
+                .build();
+
+        MovieInterface methods = restAdapter.create(MovieInterface.class);
+        Callback callback = new Callback<Video>() {
+            @Override
+            public void success(Video vid , Response response) {
+
+                if (vid.results != null && vid.results.size() > 0) {
+                    for (int i = 0; i < vid.results.size(); i++) {
+                        String key = vid.results.get(i).key;
+                        Toast.makeText(getApplicationContext(), key, Toast.LENGTH_LONG).show();
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+
+            }
+        };
+        methods.fetchVideos(mMovieId , callback);
 
     }
 
