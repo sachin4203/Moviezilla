@@ -1,7 +1,9 @@
 package com.example.sachin.moviezilla;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,7 +18,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sachin.moviezilla.data.FavouriteMovieColumns;
 import com.example.sachin.moviezilla.data.PlanetProvider;
@@ -39,9 +40,11 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
     String mtitle,mPoster,mOverView ,mReleaseDate,mBackdrop;
     Double mVoteAverage;
     ImageButton Fav;
+    ImageButton playButton;
     private static final int CURSOR_LOADER_ID = 0;
     long _id = 232;
     int mMovieId;
+    String key;
 
    /* @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -86,6 +89,7 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
         imageView = (ImageView) findViewById(R.id.imageView);
         backdrop = (ImageView) findViewById(R.id.posterBackdrop);
         Fav = (ImageButton) findViewById(R.id.button);
+        playButton = (ImageButton) findViewById(R.id.playbutton);
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -105,6 +109,22 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
         voteAverage.setText(mVoteAverage.toString() + "/10");
         Picasso.with(this).load(mPoster).into(backdrop);
         Picasso.with(this).load(mBackdrop).into(imageView);
+
+        playButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new  Intent(Intent.ACTION_VIEW);
+
+                intent.setPackage("com.google.android.youtube");
+                intent.setData(Uri.parse("https://www.youtube.com/watch?v="+key));
+
+                startActivity(intent);
+
+            }
+
+        } );
 
         Fav.setOnClickListener(new View.OnClickListener() {
 
@@ -201,9 +221,9 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
             public void success(Video vid , Response response) {
 
                 if (vid.results != null && vid.results.size() > 0) {
-                    for (int i = 0; i < vid.results.size(); i++) {
-                        String key = vid.results.get(i).key;
-                        Toast.makeText(getApplicationContext(), key, Toast.LENGTH_LONG).show();
+                    for (int i = 0; i < 1; i++) {
+                        key = vid.results.get(i).key;
+
 
                     }
 

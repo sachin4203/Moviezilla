@@ -24,6 +24,15 @@
 
             android:layout_gravity="center" />
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/playbutton"
+
+            android:background="@drawable/ic_play_circle_outline_white_48dp"
+            android:layout_gravity="center" />
+
 
     </FrameLayout>
 
