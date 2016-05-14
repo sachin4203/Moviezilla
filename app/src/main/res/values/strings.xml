@@ -73,7 +73,8 @@
     <string name="in_vote">vote</string>
     <string name="in_backdrop">backdrop</string>
     <string name="in_id">movieId</string>
-
+    <string name="title_activity_reviews">ReviewsActivity</string>
+    <string name="in_rev_id">revMovieId</string>
 
 
 </resources>

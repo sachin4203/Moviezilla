@@ -38,10 +38,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.sachin.moviezilla.MainActivity" />
         </activity>
+
         <provider
+            android:name=".data.generated.PlanetProvider"
             android:authorities="com.example.sachin.moviezilla.data.PlanetProvider"
-            android:name="com.example.sachin.moviezilla.data.generated.PlanetProvider"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <activity
+            android:name=".ReviewsActivity"
+            android:label="@string/title_activity_reviews"
+            android:parentActivityName=".MovieDetail"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sachin.moviezilla.MovieDetail" />
+        </activity>
     </application>
 
 </manifest>

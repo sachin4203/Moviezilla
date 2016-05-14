@@ -1,6 +1,7 @@
 package com.example.sachin.moviezilla;
 
 import com.example.sachin.moviezilla.model.Movie;
+import com.example.sachin.moviezilla.model.Reviews;
 import com.example.sachin.moviezilla.model.Video;
 
 import retrofit.Callback;
@@ -24,6 +25,10 @@ public interface MovieInterface {
 
     @GET("/movie/{id}/videos?api_key=b67ba58a9ec094a58f2a82340e134ba1")
     public void fetchVideos(@Path("id") int id, Callback<Video> video);
+
+
+    @GET("/movie/{id}/reviews?api_key=b67ba58a9ec094a58f2a82340e134ba1")
+    public void fetchReviews(@Path("id")String id, Callback<Reviews> review);
 
 
 

@@ -77,6 +77,10 @@ public class MovieDetail extends AppCompatActivity implements LoaderManager.Load
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext() , ReviewsActivity.class);
+                intent.putExtra(getString(R.string.in_rev_id), ""+mMovieId);
+                startActivity(intent);
+
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
